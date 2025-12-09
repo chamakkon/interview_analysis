@@ -4,13 +4,13 @@ from collections import Counter, defaultdict
 import numpy as np
 
 
-def get_vocab(df, n=10, section=None):
+def get_vocab(df, n=10, segment=None):
     transcript = df
     mecab = MeCab.Tagger("-Owakati")
     vocabs = []
-    if section:
-        transcript = transcript[transcript["section"]==section]
-    utts = transcript["transcript"]
+    if segment:
+        transcript = transcript[transcript["segment"]==segment]
+    utts = transcript["text"]
     utts = utts.map(lambda x:mecab.parse(x))
     for utt in utts.tolist():
         vocabs += utt.strip().split(" ")
@@ -24,7 +24,7 @@ def count_keyword(vocab, transcript):
     result = {}
     for keyword in vocab:
         for i, row in transcript.iterrows():
-            utt = mecab.parse(row["transcript"]).split(" ")
+            utt = mecab.parse(row["text"]).split(" ")
             word_count = utt.count(keyword[0])
             if word_count == 0:
                 continue
@@ -46,7 +46,8 @@ def get_ent(word_use, speakers):
     lexical_ent = sum(ent_scores)/total
     return lexical_ent
 
-def lexical_entrainment_score(transcript_df, section=None):
-    vocab, transcript = get_vocab(transcript_df, section=section)
+def lexical_entrainment_score(transcript_df, segment=None):
+    return 0.0
+    vocab, transcript = get_vocab(transcript_df, segment=segment)
     result, speakers = count_keyword(vocab, transcript)
     return get_ent(result, speakers)

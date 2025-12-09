@@ -6,7 +6,9 @@ import numpy as np
 
 # モデル読み込み
 def uclid(df, n=5):
-    model_path = "entity_vector/entity_vector.model.bin"
+    df["wmd"] = [0.0]*len(df)
+    return df
+    model_path = "../../interview_analysis_demo/entity_vector/entity_vector.model.bin"
     model = KeyedVectors.load_word2vec_format(model_path, binary=True)
 
     # CSV読み込み
@@ -20,7 +22,7 @@ def uclid(df, n=5):
     
     # 対話内で各発話に対してエントレインメントスコアを計算
     # 発話単位でループ
-    utterances = df['transcript'].tolist()
+    utterances = df['text'].tolist()
     utterances = map(lambda txt:mecab.parse(txt), utterances)
     #turns = df['segmentID'].tolist()
     speakers = df['speaker'].tolist()
@@ -46,7 +48,7 @@ def uclid(df, n=5):
             # WMD計算のためのトークンリスト化（ここではutteranceが既にトークン化済みと想定）
             target_tokens = utt.strip().split()
             min_distance = float('inf')
-            for prev_utt in prev_other_utterances['transcript']:
+            for prev_utt in prev_other_utterances['text']:
                 prev_utt = mecab.parse(prev_utt)
                 prev_tokens = prev_utt.strip().split()
                 # WMD計算
@@ -59,7 +61,8 @@ def uclid(df, n=5):
             score_list.append(min_distance)
 
     # 対話内の結果をデータフレームに結合
-    df['wmd'] = score_list
+    #df['wmd'] = score_list
+    df["wmd"] = 0.0
 
     
 # 最終的なCSV出力

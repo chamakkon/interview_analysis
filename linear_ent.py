@@ -4,9 +4,9 @@ import pandas as pd
 import numpy as np
 import itertools
 
-def linear_ent_score(df, section=False):
-    if section:
-        df = df[df["section"]==section]
+def linear_ent_score(df, segment=False):
+    if segment:
+        df = df[df["segment"]==segment]
     df = df.dropna(how="any")
     indy_ipu = []
     subject_ipu = []
