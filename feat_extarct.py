@@ -7,7 +7,7 @@ import subprocess
 import itertools
 
 def ipu_features(utt_df, output_path):
-    CONFIG_openSMILE = "emobase2010_haoqi_revised.confのコピー"
+    CONFIG_openSMILE = "../../interview_analysis_demo/emobase2010_haoqi_revised.confのコピー"
     #df = pd.read_csv(csv_path)
     df = utt_df
     os.makedirs(output_path, exist_ok=True)

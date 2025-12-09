@@ -37,7 +37,7 @@ def tned_feature(df):
 def tned_score(df):
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-    model_name = "../tned/model/triplet_64d_50ep_candor_test_3000.pth"
+    model_name = "../../tned/model/triplet_64d_50ep_candor_test_3000.pth"
     embedding_net = EmbeddingNet()
 
     model = embedding_net
@@ -76,3 +76,5 @@ def tned_score(df):
             df["tned"][i] = tned_scores[i]
     
     return df
+
+

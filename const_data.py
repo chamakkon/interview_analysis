@@ -8,6 +8,6 @@ def construct(session):
     df = split_audio(audio_file, transcript_file, session)
     result_df = ipu_features(df, f"features/{session}")
     df = pd.merge(df, result_df, on="audio")
-    df.to_csv(f"{session}_features.csv", index=False)
+    df.to_csv(f"audio_feature/{session}_features.csv", index=False)
 
 
